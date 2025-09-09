@@ -1,15 +1,15 @@
 package net.redhogs.cronparser.builder;
 
+import java.text.MessageFormat;
 import net.redhogs.cronparser.I18nMessages;
 import net.redhogs.cronparser.Options;
-
-import java.text.MessageFormat;
 
 /**
  * @author grhodes
  * @since 10 Dec 2012 14:10:43
  */
 public class SecondsDescriptionBuilder extends AbstractDescriptionBuilder {
+
     private final Options options;
 
     public SecondsDescriptionBuilder(Options options) {
@@ -40,5 +40,4 @@ public class SecondsDescriptionBuilder extends AbstractDescriptionBuilder {
     protected Boolean needSpaceBetweenWords() {
         return options.isNeedSpaceBetweenWords();
     }
-
 }

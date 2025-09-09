@@ -1,11 +1,11 @@
 package net.redhogs.cronparser;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author grhodes
@@ -13,8 +13,7 @@ import java.util.regex.Pattern;
  */
 class ExpressionParser {
 
-    private ExpressionParser() {
-    }
+    private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
 
     /**
      * @deprecated Use ExpressionParser.parse(String, Options) instead.
@@ -25,7 +24,7 @@ class ExpressionParser {
     }
 
     public static String[] parse(String expression, Options options) throws ParseException {
-        String[] parsed = new String[] {"", "", "", "", "", "", ""};
+        String[] parsed = new String[]{"", "", "", "", "", "", ""};
         if (StringUtils.isEmpty(expression)) {
             throw new IllegalArgumentException(I18nMessages.get("expression_empty_exception"));
         }
@@ -40,14 +39,14 @@ class ExpressionParser {
             //If last element ends with 4 digits, a year element has been supplied and no seconds element
             Pattern yearRegex = Pattern.compile("(.*)\\d{4}$");
             if (yearRegex.matcher(expressionParts[5]).matches()) {
-              System.arraycopy(expressionParts, 0, parsed, 1, 6);
+                System.arraycopy(expressionParts, 0, parsed, 1, 6);
             } else {
-              System.arraycopy(expressionParts, 0, parsed, 0, 6);
+                System.arraycopy(expressionParts, 0, parsed, 0, 6);
             }
         } else if (expressionParts.length == 7) {
-          parsed = expressionParts;
+            parsed = expressionParts;
         } else {
-          throw new ParseException(expression, 7);
+            throw new ParseException(expression, 7);
         }
 
         normaliseExpression(parsed, options);
@@ -79,17 +78,17 @@ class ExpressionParser {
         }
 
         // convert SUN-SAT format to 0-6 format
-        if(!StringUtils.isNumeric(expressionParts[5])) {
+        if (!StringUtils.isNumeric(expressionParts[5])) {
             for (int i = 0; i <= 6; i++) {
                 expressionParts[5] = expressionParts[5].replace(DateAndTimeUtils.getDayOfWeekName(i + 1), String.valueOf(i));
             }
         }
 
         // convert JAN-DEC format to 1-12 format
-        if(!StringUtils.isNumeric(expressionParts[4])) {
+        if (!StringUtils.isNumeric(expressionParts[4])) {
             for (int i = 1; i <= 12; i++) {
-                DateTime currentMonth = new DateTime().withDayOfMonth(1).withMonthOfYear(i);
-                String currentMonthDescription = currentMonth.toString("MMM", Locale.ENGLISH).toUpperCase();
+                LocalDateTime currentMonth = LocalDateTime.now().withDayOfMonth(1).withMonth(i);
+                String currentMonthDescription = currentMonth.format(MONTH_FORMATTER).toUpperCase();
                 expressionParts[4] = expressionParts[4].replace(currentMonthDescription, String.valueOf(i));
             }
         }
@@ -100,9 +99,11 @@ class ExpressionParser {
         }
 
         // convert 0 DOW to 7 so that 0 for Sunday in zeroBasedDayOfWeek is valid
-        if((options == null || options.isZeroBasedDayOfWeek()) && "0".equals(expressionParts[5])) {
+        if ((options == null || options.isZeroBasedDayOfWeek()) && "0".equals(expressionParts[5])) {
             expressionParts[5] = "7";
         }
     }
 
+    private ExpressionParser() {
+    }
 }

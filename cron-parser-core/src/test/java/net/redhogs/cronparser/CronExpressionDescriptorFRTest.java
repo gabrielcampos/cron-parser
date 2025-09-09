@@ -1,7 +1,6 @@
 package net.redhogs.cronparser;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import org.junit.Test;
  */
 public class CronExpressionDescriptorFRTest {
 
-   private static final Locale FRENCH = new Locale("fr");
+    private static final Locale FRENCH = Locale.of("fr");
 
     @Test
     public void testEverySecond() throws Exception {
@@ -270,18 +269,14 @@ public class CronExpressionDescriptorFRTest {
         Assert.assertEquals("À 05 et 10 minutes après l'heure, à 12:00 AM", CronExpressionDescriptor.getDescription("5,10 0 * * *", FRENCH));
         Assert.assertEquals("À 05 et 10 minutes après l'heure, à 12:00 AM, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5,10 0 2 * *", FRENCH));
         Assert.assertEquals("Tous(tes) les 10 minutes, à 12:00 AM, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5/10 0 2 * *", FRENCH));
-
         Assert.assertEquals("À 05 et 10 minutes après l'heure", CronExpressionDescriptor.getDescription("5,10 * * * *", FRENCH));
         Assert.assertEquals("À 05 et 10 minutes après l'heure, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5,10 * 2 * *", FRENCH));
         Assert.assertEquals("Tous(tes) les 10 minutes, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5/10 * 2 * *", FRENCH));
-
         Assert.assertEquals("À 5 et 6 secondes après la minute, à 12:00 AM", CronExpressionDescriptor.getDescription("5,6 0 0 * * *", FRENCH));
         Assert.assertEquals("À 5 et 6 secondes après la minute, à 1:00 AM", CronExpressionDescriptor.getDescription("5,6 0 1 * * *", FRENCH));
         Assert.assertEquals("À 5 et 6 secondes après la minute, à 12:00 AM, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5,6 0 0 2 * *", FRENCH));
-
         Assert.assertEquals("À 5 et 6 secondes après la minute", CronExpressionDescriptor.getDescription("5,6 * * * * *", FRENCH));
         Assert.assertEquals("À 5 et 6 secondes après la minute, à 1:00 AM", CronExpressionDescriptor.getDescription("5,6 * 1 * * *", FRENCH));
         Assert.assertEquals("À 5 et 6 secondes après la minute, le 2ème jour du mois", CronExpressionDescriptor.getDescription("5,6 * * 2 * *", FRENCH));
     }
-
 }

@@ -16,7 +16,8 @@ public final class I18nMessages {
     private static Locale currentLocale = DEFAULT_LOCALE;
     private static ResourceBundle messages = ResourceBundle.getBundle(BUNDLE, currentLocale, new UTF8Control());
 
-    private I18nMessages() {}
+    private I18nMessages() {
+    }
 
     public static Locale getCurrentLocale() {
         return currentLocale;
@@ -32,6 +33,8 @@ public final class I18nMessages {
     }
 
     static class UTF8Control extends ResourceBundle.Control {
+
+        @Override
         public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException, InstantiationException, IOException {
             // The below is a copy of the default implementation.
             String bundleName = toBundleName(baseName, locale);
@@ -45,7 +48,7 @@ public final class I18nMessages {
                     if (connection != null) {
                         connection.setUseCaches(false);
                         stream = connection.getInputStream();
-                  }
+                    }
                 }
             } else {
                 stream = loader.getResourceAsStream(resourceName);
@@ -61,5 +64,4 @@ public final class I18nMessages {
             return bundle;
         }
     }
-
 }

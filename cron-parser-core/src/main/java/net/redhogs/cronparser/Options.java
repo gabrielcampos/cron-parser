@@ -11,7 +11,9 @@ public class Options {
     private boolean verbose;
     private boolean zeroBasedDayOfWeek;
     private boolean twentyFourHourTime;
-    /** Chinese, Japanese, Korean and other East Asian languages have no spaces between words */
+    /**
+     * Chinese, Japanese, Korean and other East Asian languages have no spaces between words
+     */
     private boolean needSpaceBetweenWords;
 
     public Options() {
@@ -81,6 +83,7 @@ public class Options {
      * <ul>
      * <li>day of week (1 - 7) (1 to 6 are Sunday to Saturday, or use names; 7 is Saturday)</li>
      * </ul>
+     *
      * @param zeroBasedDayOfWeek if we are zero-based or not
      */
     public void setZeroBasedDayOfWeek(boolean zeroBasedDayOfWeek) {
@@ -96,6 +99,7 @@ public class Options {
      * <ul>
      * <li>day of week (1 - 7) (1 to 7 are Sunday to Saturday, or use names)</li>
      * </ul>
+     *
      * @return if we are zero-based or not
      */
     public boolean isZeroBasedDayOfWeek() {
