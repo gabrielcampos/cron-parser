@@ -1,11 +1,11 @@
 package net.redhogs.cronparser.builder;
 
+import java.text.MessageFormat;
 import net.redhogs.cronparser.I18nMessages;
 import net.redhogs.cronparser.Options;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.lang3.math.NumberUtils;
-
-import java.text.MessageFormat;
 
 /**
  * @author grhodes
@@ -13,7 +13,7 @@ import java.text.MessageFormat;
  */
 public abstract class AbstractDescriptionBuilder {
 
-    protected final char[] SpecialCharsMinusStar = new char[] { '/', '-', ',' };
+    protected final char[] SpecialCharsMinusStar = new char[]{'/', '-', ','};
 
     public String getSegmentDescription(String expression, String allDescription) {
         String description = "";
@@ -67,6 +67,7 @@ public abstract class AbstractDescriptionBuilder {
 
     /**
      * @param expression
+     * @param omitSeparator
      * @return
      */
     protected abstract String getBetweenDescriptionFormat(String expression, boolean omitSeparator);
@@ -90,7 +91,6 @@ public abstract class AbstractDescriptionBuilder {
     protected abstract String getDescriptionFormat(String expression);
 
     /**
-     * @param
      * @return
      */
     protected abstract Boolean needSpaceBetweenWords();
@@ -117,7 +117,7 @@ public abstract class AbstractDescriptionBuilder {
     protected String plural(String expression, String singular, String plural) {
         if (NumberUtils.isNumber(expression) && (Integer.parseInt(expression) > 1)) {
             return plural;
-        } else if (StringUtils.contains(expression, ",")) {
+        } else if (Strings.CS.contains(expression, ",")) {
             return plural;
         }
         return singular;
@@ -128,7 +128,7 @@ public abstract class AbstractDescriptionBuilder {
      * @param options
      * @return
      */
-    protected String getSpace(Options options){
+    protected String getSpace(Options options) {
         return options.isNeedSpaceBetweenWords() ? " " : "";
     }
 }

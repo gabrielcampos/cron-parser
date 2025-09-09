@@ -1,12 +1,12 @@
 package net.redhogs.cronparser;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import java.text.MessageFormat;
+import org.apache.commons.lang3.Strings;
 
 /**
  * @author grhodes
@@ -14,12 +14,10 @@ import java.text.MessageFormat;
  */
 public final class DateAndTimeUtils {
 
-    private DateAndTimeUtils() {
-    }
-
     /**
      * @param hoursExpression
      * @param minutesExpression
+     * @param opts
      * @return
      */
     public static String formatTime(String hoursExpression, String minutesExpression, Options opts) {
@@ -30,6 +28,7 @@ public final class DateAndTimeUtils {
      * @param hoursExpression
      * @param minutesExpression
      * @param secondsExpression
+     * @param opts
      * @return
      */
     public static String formatTime(String hoursExpression, String minutesExpression, String secondsExpression, Options opts) {
@@ -39,30 +38,30 @@ public final class DateAndTimeUtils {
         LocalTime localTime;
         DateTimeFormatter timeFormat;
 
-        if(opts.isTwentyFourHourTime()) {
+        if (opts.isTwentyFourHourTime()) {
             if (!StringUtils.isEmpty(secondsExpression)) {
                 final int seconds = Integer.parseInt(secondsExpression);
-                localTime = new LocalTime(hour, minutes, seconds);
-                timeFormat = DateTimeFormat.mediumTime();
+                localTime = LocalTime.of(hour, minutes, seconds);
+                timeFormat = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM);
             } else {
-                localTime = new LocalTime(hour, minutes);
-                timeFormat = DateTimeFormat.shortTime();
+                localTime = LocalTime.of(hour, minutes);
+                timeFormat = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
             }
         } else {
             if (!StringUtils.isEmpty(secondsExpression)) {
                 final int seconds = Integer.parseInt(secondsExpression);
-                localTime = new LocalTime(hour, minutes, seconds);
-                timeFormat = DateTimeFormat.forPattern("h:mm:ss a");
+                localTime = LocalTime.of(hour, minutes, seconds);
+                timeFormat = DateTimeFormatter.ofPattern("h:mm:ss a");
             } else {
-                localTime = new LocalTime(hour, minutes);
-                timeFormat = DateTimeFormat.forPattern("h:mm a");
+                localTime = LocalTime.of(hour, minutes);
+                timeFormat = DateTimeFormatter.ofPattern("h:mm a");
             }
         }
-        return localTime.toString(timeFormat.withLocale(I18nMessages.getCurrentLocale()));
+        return localTime.format(timeFormat.withLocale(I18nMessages.getCurrentLocale()));
     }
 
     public static String getDayOfWeekName(int dayOfWeek) {
-        return new DateTime().withDayOfWeek(dayOfWeek).dayOfWeek().getAsText(I18nMessages.getCurrentLocale());
+        return DayOfWeek.of(dayOfWeek).getDisplayName(TextStyle.FULL, I18nMessages.getCurrentLocale());
     }
 
     /**
@@ -71,7 +70,7 @@ public final class DateAndTimeUtils {
      * @since https://github.com/RedHogs/cron-parser/issues/2
      */
     public static String formatMinutes(String minutesExpression) {
-        if (StringUtils.contains(minutesExpression, ",")) {
+        if (Strings.CS.contains(minutesExpression, ",")) {
             StringBuilder formattedExpression = new StringBuilder();
             for (String minute : StringUtils.split(minutesExpression, ',')) {
                 formattedExpression.append(StringUtils.leftPad(minute, 2, '0'));
@@ -82,4 +81,6 @@ public final class DateAndTimeUtils {
         return StringUtils.leftPad(minutesExpression, 2, '0');
     }
 
+    private DateAndTimeUtils() {
+    }
 }

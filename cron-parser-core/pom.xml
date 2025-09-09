@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.redhogs.cronparser</groupId>
         <artifactId>cron-parser</artifactId>
-        <version>3.2-SNAPSHOT</version>
+        <version>3.5.1</version>
     </parent>
 
     <artifactId>cron-parser-core</artifactId>
@@ -16,16 +16,10 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commonsLang.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodatime.version}</version>
+            <version>3.19.0</version>
         </dependency>
     </dependencies>
 

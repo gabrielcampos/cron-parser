@@ -22,24 +22,22 @@ public class DayOfMonthDescriptionBuilder extends AbstractDescriptionBuilder {
 
     @Override
     protected String getIntervalDescriptionFormat(String expression) {
-
-        return ", "+I18nMessages.get("every_x")+ getSpace(options) + plural(expression, I18nMessages.get("day"), I18nMessages.get("days"));
+        return ", " + I18nMessages.get("every_x") + getSpace(options) + plural(expression, I18nMessages.get("day"), I18nMessages.get("days"));
     }
 
     @Override
     protected String getBetweenDescriptionFormat(String expression, boolean omitSeparator) {
-    	String format = I18nMessages.get("between_days_of_the_month");
-        return omitSeparator ? format : ", "+format;
+        String format = I18nMessages.get("between_days_of_the_month");
+        return omitSeparator ? format : ", " + format;
     }
 
     @Override
     protected String getDescriptionFormat(String expression) {
-        return ", "+I18nMessages.get("on_day_of_the_month");
+        return ", " + I18nMessages.get("on_day_of_the_month");
     }
 
     @Override
     protected Boolean needSpaceBetweenWords() {
         return options.isNeedSpaceBetweenWords();
     }
-
 }

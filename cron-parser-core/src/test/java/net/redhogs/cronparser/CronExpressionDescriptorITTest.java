@@ -1,9 +1,8 @@
 package net.redhogs.cronparser;
 
+import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Locale;
 
 public class CronExpressionDescriptorITTest {
 
@@ -256,10 +255,8 @@ public class CronExpressionDescriptorITTest {
         Assert.assertEquals("05 e 10 minuti dopo l'ora", CronExpressionDescriptor.getDescription("5,10 * * * *", ITALIAN));
         Assert.assertEquals("05 e 10 minuti dopo l'ora, nel 2 giorno del mese", CronExpressionDescriptor.getDescription("5,10 * 2 * *", ITALIAN));
         Assert.assertEquals("Ogni 10 minuti, nel 2 giorno del mese", CronExpressionDescriptor.getDescription("5/10 * 2 * *", ITALIAN));
-
         Assert.assertEquals("5 e 6 secondi dopo il minuto", CronExpressionDescriptor.getDescription("5,6 * * * * *", ITALIAN));
         Assert.assertEquals("5 e 6 secondi dopo il minuto, 1:00 AM", CronExpressionDescriptor.getDescription("5,6 * 1 * * *", ITALIAN));
         Assert.assertEquals("5 e 6 secondi dopo il minuto, nel 2 giorno del mese", CronExpressionDescriptor.getDescription("5,6 * * 2 * *", ITALIAN));
     }
-
 }
